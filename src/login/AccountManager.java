@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Scanner;
 
-import static get_input.getInputAccount.getExistAccount;
+import static get_input.getInput.getExistAccount;
+import static get_input.getInput.getNonexistentAccount;
 
 public class AccountManager {
     private static List<Account> accountsList = new ArrayList<>();
@@ -21,45 +21,27 @@ public class AccountManager {
     }
 
     public static void updateListFromFile() throws IOException, ClassNotFoundException {
-        accountsList = ReadWrite.read("src/case_md4/file/accounts.txt");
+        accountsList = ReadWrite.read("src/file/accounts.txt");
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         displayAccountsListByAccessLevel();
-        deleteAccount();
+        signUp();
     }
 
     public void addAccount(Account account) throws IOException {
         accountsList.add(account);
-        ReadWrite.write("src/case_md4/file/accounts.txt", accountsList);
+        ReadWrite.write("src/file/accounts.txt", accountsList);
     }
 
     public static void signUp() throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Nhập tên tài khoản mới: ");
-        String account = scanner.nextLine();
-        boolean isDuplicate = false;
-        while (true) {
-            for (Account acc : accountsList) {
-                if (acc.getAccount().equals(account)) {
-                    isDuplicate = true;
-                    System.out.println("Tài khoản đã tồn tại.");
-                    System.out.print("Vui lòng nhập lại một tên tài khoản khác:");
-                    account = scanner.nextLine();
-                    break;
-                }
-            }
-            if (!isDuplicate) {
-                System.out.print("Nhập mật khẩu: ");
-                String password = scanner.nextLine();
-                accountsList.add(new Account(account, password, AccessLevel.USER));
-                System.out.println("Đăng kí thành công.");
-                ReadWrite.write("src/case_md4/file/accounts.txt", accountsList);
-                break;
-            } else {
-                isDuplicate = false;
-            }
-        }
+        System.out.print("Đăng kí tài khoản mới: ");
+        String account = getNonexistentAccount();
+        System.out.print("Tạo mật khẩu: ");
+        String password = getNonexistentAccount();
+        accountsList.add(new Account(account, password, AccessLevel.USER));
+        ReadWrite.write("src/file/accounts.txt", accountsList);
+        System.out.println("Đăng kí thành công tại khoản: " + account);
     }
 
     public static void displayAccountsListByAccessLevel() throws IOException, ClassNotFoundException {
@@ -76,9 +58,10 @@ public class AccountManager {
         String account = getExistAccount();
         accountsList.removeIf(acc -> acc.getAccount().equals(account));
         System.out.println("Đã xóa tài khoản " + account);
-        ReadWrite.write("src/case_md4/file/accounts.txt", accountsList);
+        ReadWrite.write("src/file/accounts.txt", accountsList);
     }
 }
+
 
 
 
