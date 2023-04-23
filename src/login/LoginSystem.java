@@ -1,69 +1,73 @@
 package login;
 
-import java.util.Scanner;
+import model.Account;
+
+import java.io.IOException;
+
+import static controller.AccountManager.updateListFromFile;
+import static controller.AccountManager.writeAccountsListToFile;
+import static get_input.Input.getExistPhoneNumber;
+import static login.RandomPasswordGenerator.generateRandomPassword;
+import static login.SingIn.signIn;
+import static login.SingUp.signUp;
+import static view.Menu.getValidIntChoice;
+import static view.Menu.returnOrExit;
 
 public class LoginSystem {
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static void logInMenu () throws IOException, ClassNotFoundException {
         int choice;
-
         do {
-            displayMenu();
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character after reading the integer
+            displayLogInMenu();
+            choice = getValidIntChoice(0 , 4);
 
             switch (choice) {
-                case 1:
-                    signIn();
-                    break;
-                case 2:
-                    signUp();
-                    break;
-                case 3:
-                    guess();
-                    break;
-                case 4:
-                    exit();
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-                    break;
+                case 1 -> signIn();
+                case 2 -> signUp();
+                case 3 -> guess();
+                case 4 -> reissueAccount();
+                case 0 -> exit();
             }
-        } while (choice != 4);
+        } while (choice != 0);
     }
 
-    public static void displayMenu() {
+    public static void reissueAccount() throws IOException, ClassNotFoundException {
+        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("Cấp lại tài khoản về số điện thoại");
+        String phoneNumber = getExistPhoneNumber();
+        for (Account account : updateListFromFile()) {
+            if (account.getPhoneNumber().equals(phoneNumber)) {
+                System.out.println("───────────────────────────────────────────────────────────────────────────────");
+                System.out.println("Tài khoản đã được gửi về số điện thoại");
+                System.out.println("Tài khoản: " + account.getAccount());
+                System.out.println("Mật khẩu: " + generateRandomPassword());
+                break;
+            }
+        }
+    }
+
+    public static void displayLogInMenu() {
         System.out.println("""
-               Welcome to the login page
-               1. Sign In
-               2. Sign Up
-               3. Guess
-               4. Exit
-                """);
-    }
-
-    public static void signIn() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Đăng nhập");
-        System.out.print("Username: ");
-        String username = scanner.nextLine();
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
-
-    }
-
-    public static void signUp() {
-        System.out.println("Sign Up functionality goes here.");
+                ───────────────────────────────────────────────────────────────────────────────
+                Chào mừng đến với trang web
+                ───────────────────────────────────────────────────────────────────────────────
+                1. Đăng nhập
+                2. Đăng ký
+                3. Guess
+                4. Cấp lại tài khoản
+                0. Exit""");
     }
 
     public static void guess() {
-        System.out.println("Guess functionality goes here.");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("Đang xây dựng...");
+        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        returnOrExit();
     }
 
-    public static void exit() {
+    public static void exit() throws IOException {
+        writeAccountsListToFile();
         System.out.println("Exiting...");
+        System.exit(0);
     }
 }
