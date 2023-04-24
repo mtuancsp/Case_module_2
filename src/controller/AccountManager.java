@@ -3,6 +3,7 @@ package controller;
 import model.AccessLevel;
 import model.Account;
 import read_write.ReadWrite;
+import view.LoggedMenu;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -12,7 +13,6 @@ import java.util.stream.Collectors;
 
 import static get_input.Input.*;
 import static read_write.ReadWrite.write;
-import static view.Menu.getValidIntChoice;
 
 public class AccountManager {
     private static List<Account> accountsList = new ArrayList<>();
@@ -21,12 +21,10 @@ public class AccountManager {
         write("src/file/accounts.txt", accountsList);
     }
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        accountsList.add(new Account("boss", "boss", "113", "boss", AccessLevel.BOSS));
+//        accountsList.add(new Account("boss", "boss", "113", "boss", AccessLevel.BOSS));
+        findAccount("boss").setJoinDate(LocalDate.parse("2022-01-01"));
         writeAccountsListToFile();
-    }
-
-    public static List<Account> getAccountsList() {
-        return accountsList;
+        displayAccountsListByAccessLevel();
     }
 
     public static void writeAccountsListToFile() throws IOException {
@@ -49,81 +47,19 @@ public class AccountManager {
         return updateListFromFile().stream().map(Account::getEmail).collect(Collectors.toSet());
     }
 
-    //display ADMIN accounts
-    public static void listADMIN() throws IOException, ClassNotFoundException {
-        updateListFromFile();
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
-        System.out.println("Danh sách ADMIN");
-        accountsList.stream().filter(acc -> acc.getAccessLevel() == AccessLevel.ADMIN).forEach(System.out::println);
-    }
 
-    //add admin
-    public static void addADMIN() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
-        System.out.println("Thêm ADMIN");
-        do {
-            String account = getExistAccount();
-            var acc = findAccount(account);
-            if (acc.getAccessLevel() == AccessLevel.ADMIN || acc.getAccessLevel() == AccessLevel.BOSS) {
-                System.out.println("Tài khoản đã là ADMIN hoặc cao hơn, vui lòng kiểm tra lại");
-            } else {
-                acc.setAccessLevel(AccessLevel.ADMIN);
-                System.out.println("Đã nâng cấp tài khoản '" + account + "' thành ADMIN");
-                writeAccountsListToFile();
-                break;
-            }
-        } while (true);
-    }
-
-    public static void removeADMIN() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
-        System.out.println("Tước quyền ADMIN");
-        do {
-            String account = getExistAccount();
-            var acc = findAccount(account);
-            if (acc.getAccessLevel() == AccessLevel.BOSS) {
-                System.out.println("Định tự hủy à ??? Không có đâu");
-            }
-            if (acc.getAccessLevel() != AccessLevel.ADMIN) {
-                System.out.println("Tài khoản không phải quyền ADMIN, vui lòng kiểm tra lại");
-            } else {
-                do {
-                    System.out.println("───────────────────────────────────────────────────────────────────────────────");
-                    System.out.println("Bạn muốn hạ tài khoản '" + account + "' xuống cấp độ nào?");
-                    System.out.println("1. MODERATOR");
-                    System.out.println("2. USER");
-                    System.out.println("0. Quay lại");
-                    int choice = getValidIntChoice(0, 2);
-                    switch (choice) {
-                        case 1 -> {
-                            acc.setAccessLevel(AccessLevel.MODERATOR);
-                            System.out.println("Đã hạ cấp tài khoản '" + account + "' thành MODERATOR");
-                            writeAccountsListToFile();
-                            return;
-                        }
-                        case 2 -> {
-                            acc.setAccessLevel(AccessLevel.USER);
-                            System.out.println("Đã hạ cấp tài khoản '" + account + "' thành USER");
-                            writeAccountsListToFile();
-                            return;
-                        }
-                        case 0 -> {
-                            return;
-                        }
-                    }
-                } while (true);
-            }
-        } while (true);
-    }
 
     public static Account findAccount(String account) throws IOException, ClassNotFoundException {
-        return accountsList.stream().filter(a -> a.getAccount().equals(account)).findFirst().orElse(null);
+        return updateListFromFile().stream().filter(a -> a.getAccount().equals(account)).findFirst().orElse(null);
     }
 
     public static void displayAccountsListByAccessLevel() throws IOException, ClassNotFoundException {
         updateListFromFile().sort(Comparator.comparing(Account::getAccessLevel));
         System.out.println("───────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách tài khoản");
+        System.out.printf("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s%n",
+                "ACCOUNT", "USERNAME", "PASSWORD", "ACCESS LEVEL", "PHONE NUMBER", "EMAIL",
+                "Join Date", "Ban Date");
         for (Account account : accountsList) {
             System.out.println(account);
         }
@@ -133,9 +69,16 @@ public class AccountManager {
         System.out.println("───────────────────────────────────────────────────────────────────────────────");
         System.out.println("Xóa tài khoản !!!");
         String account = getExistAccount();
-        accountsList.removeIf(acc -> acc.getAccount().equals(account));
-        System.out.println("Đã xóa tài khoản " + account);
-        writeAccountsListToFile();
+        Account acc = findAccount(account);
+        if (acc.getAccessLevel() == AccessLevel.USER) {
+            checkPassword(LoggedMenu.getAccount());
+            accountsList.remove(acc);
+            System.out.println("Đã xóa tài khoản " + account);
+            writeAccountsListToFile();
+        } else {
+            System.err.println("Không thể xóa tài khoản có cấp bậc cao hơn USER");
+        }
+
     }
 
     //change username
@@ -155,6 +98,7 @@ public class AccountManager {
         System.out.println("───────────────────────────────────────────────────────────────────────────────");
         System.out.println("Đổi mật khẩu");
         checkPassword(acc);
+        setNewPassword(acc);
     }
 
     public static void setNewPassword(Account acc) throws IOException {
@@ -188,10 +132,11 @@ public class AccountManager {
         System.out.println("───────────────────────────────────────────────────────────────────────────────");
         System.out.println("Xác thực số điện thoại thành công");
         System.out.println("Thiết lập số điện thoại mới");
+//        String newPhoneNumber = scanner.nextLine();
         String newPhoneNumber = getValidPhoneNumber();
         acc.setPhoneNumber(newPhoneNumber);
+        System.out.println("Đã thay đổi số điện thoại thành công.");
         writeAccountsListToFile();
-        System.out.println("Đã thay đổi số điện thoại thành: " + newPhoneNumber);
     }
 
     public static void changeEmail(Account acc) throws IOException, ClassNotFoundException {
@@ -214,10 +159,10 @@ public class AccountManager {
         String newEmail = getValidEmail();
         acc.setEmail(newEmail);
         writeAccountsListToFile();
-        System.out.println("Đã thay đổi email thành: " + newEmail);
+        System.out.println("Đã thay đổi email thành công.");
     }
 
-    public String getJoinDuration(Account acc) {
+    public static String getJoinDuration(Account acc) {
         LocalDate currentDate = LocalDate.now();
         Period duration = Period.between(acc.getJoinDate(), currentDate);
 
@@ -225,7 +170,18 @@ public class AccountManager {
         int months = duration.getMonths();
         int days = duration.getDays();
 
-        return years + " năm, " + months + " tháng, " + days + " ngày";
+        String str;
+        if (years >= 3) {
+            str = "Trùm sò";
+        } else if (years == 2) {
+            str = "Lão luyện";
+        } else if (years == 1) {
+            str = "Kinh nghiệm";
+        } else {
+            str = "A ma tơ";
+        }
+
+        return years + " năm, " + months + " tháng, " + days + " ngày" + "  ─>  " + str.toUpperCase();
     }
 
 }

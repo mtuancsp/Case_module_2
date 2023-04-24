@@ -46,10 +46,8 @@ public class UserInformation implements Serializable {
 
     @Override
     public String toString() {
-        return "CCCD/CMND: " + id +
-                ", Họ và tên: '" + fullName + '\'' +
-                ", Ngày sinh: '" + birthDate + '\'' +
-                "\nMô tả: '" + description + '\'';
+        return String.format("Họ và tên: %-20s CCCD/CMND: %-15s Ngày sinh: %-15s Mô tả: %s",
+                fullName, id, birthDate, description);
     }
 }
 

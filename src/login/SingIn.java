@@ -1,8 +1,9 @@
 package login;
 
-import view.LoggedMenu;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 import static controller.AccountManager.updateListFromFile;
@@ -24,8 +25,15 @@ public class SingIn {
 
             var acc = updateListFromFile().stream().filter(a -> a.getAccount().equals(account) && a.getPassword().equals(password)).findFirst().orElse(null);
             if (acc != null) {
-                System.out.println("Đăng nhập thành công");
-                loggedMenu(acc);
+                if (acc.getBanDate() != null && acc.getBanDate().isAfter(LocalDate.now())){
+                    System.err.println("Tài khoản đã bị BAN đến " + acc.getBanDate());
+                    System.err.println("Thời gian bị BAN còn lại: " + ChronoUnit.DAYS.between(LocalDate.now(), acc.getBanDate()) + " ngày");
+                }
+                else {
+                    System.out.println("Đăng nhập thành công");
+                    loggedMenu(acc);
+                }
+
             } else {
                 System.out.println("Tài khoản hoặc mật khẩu không đúng");
                 System.out.print("1.Thử đăng nhập lại\n2.Quên mật khẩu\n0.Quay lại\nLựa chọn của bạn: ");

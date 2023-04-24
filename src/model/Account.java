@@ -99,13 +99,8 @@ public class Account implements Serializable {
     }
 
     public String toString() {
-        return
-                "Account = '" + account + '\'' +
-                        ", Username = '" + username + '\'' +
-                        ", Password = '" + password + '\'' +
-                        ", Access level = '" + accessLevel + '\'' +
-                        ", Phone Number = '" + phoneNumber + '\'' +
-                        ", Email = '" + email + '\'' +
-                        ", Join Date = " + getJoinDate();
+        return String.format("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s",
+                account, username, password, accessLevel, phoneNumber, email,
+                joinDate, banDate);
     }
 }

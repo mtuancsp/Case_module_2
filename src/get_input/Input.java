@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static controller.AccountManager.*;
 import static login.ForgotPassword.forgotPassword;
-
+import static login.LoginSystem.logInMenu;
 
 public class Input {
 
@@ -105,40 +105,44 @@ public class Input {
 
     public static String getValidPhoneNumber() throws IOException, ClassNotFoundException {
         Set<String> existingPhoneNumbers = getPhoneNumberSet();
-        String phoneNumber;
+        String newPhoneNumber;
+        Scanner scanner = new Scanner(System.in);
         do {
             System.out.print("Nhập số điện thoại: ");
-            phoneNumber = new Scanner(System.in).nextLine();
+            newPhoneNumber = scanner.nextLine();
 
-            if (!phoneNumber.matches("^0[0-9]{9}$")) {
+            if (!newPhoneNumber.matches("^0[0-9]{9}$")) {
                 System.out.println("Số điện thoại không hợp lệ. Vui lòng nhập lại.");
                 continue;
             }
-            if (existingPhoneNumbers.contains(phoneNumber)) {
+            if (existingPhoneNumbers.contains(newPhoneNumber)) {
                 System.out.println("Số điện thoại đã liên kết với tài khoản khác. Vui lòng nhập số điện thoại khác.");
                 continue;
             }
-            return phoneNumber;
+
+            return newPhoneNumber;
+
         } while (true);
     }
 
     public static String getValidEmail() throws IOException, ClassNotFoundException {
         Set<String> existingEmails = getEmailSet();
-        String email;
+        String newEmail;
 
         do {
             System.out.print("Nhập email: ");
-            email = new Scanner(System.in).nextLine();
+            newEmail = new Scanner(System.in).nextLine();
 
-            if (!email.matches("^[A-Za-z0-9]+[A-Za-z0-9_]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)+$")) {
+            if (!newEmail.matches("^[A-Za-z0-9]+[A-Za-z0-9_]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)+$")) {
                 System.out.println("Email không hợp lệ. Vui lòng nhập lại.");
                 continue;
             }
-            if (existingEmails.contains(email)) {
+            if (existingEmails.contains(newEmail)) {
                 System.out.println("Email đã liên kết với tài khoản khác. Vui lòng nhập email khác.");
                 continue;
             }
-            return email;
+
+            return newEmail;
 
         } while (true);
     }
@@ -177,8 +181,7 @@ public class Input {
 
         if (password.equals("forgot")) {
             forgotPassword();
-        } else {
-            setNewPassword(acc);
+            logInMenu();
         }
     }
 
@@ -207,10 +210,11 @@ public class Input {
     }
 
     public static String getValidBirthDate() {
+        Scanner scanner = new Scanner(System.in);
         String birthDate;
         do {
             System.out.print("Nhập ngày sinh (dd/MM/yyyy): ");
-            birthDate = new Scanner(System.in).nextLine();
+            birthDate = scanner.nextLine();
             if (!birthDate.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
                 System.out.println("Ngày sinh không đúng định dạng. Vui lòng nhập lại.");
             } else {
@@ -221,17 +225,22 @@ public class Input {
                     Calendar dob = Calendar.getInstance();
                     dob.setTime(dateOfBirth);
                     Calendar today = Calendar.getInstance();
-                    today.add(Calendar.YEAR, -18);
                     if (dob.after(today)) {
-                        System.out.println("Á à bắt được ông cháu chưa đủ tuổi nhé!");
+                        System.err.println("Người đến từ tương lai à ??. Vui lòng nhập lại.");
+                    } else {
+                        today.add(Calendar.YEAR, -18);
+                        if (dob.after(today)) {
+                            System.err.println("Á à bắt được ông cháu chưa đủ tuổi nhé!");
+                        }
+                        return birthDate;
                     }
-                    return birthDate;
                 } catch (ParseException e) {
                     System.out.println("Ngày sinh không hợp lệ. Vui lòng nhập lại.");
                 }
             }
         } while (true);
     }
+
 
 
 }

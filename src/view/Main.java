@@ -1,6 +1,6 @@
 package view;
 
-import static controller.AccountManager.displayAccountsListByAccessLevel;
+import static controller.AccountManager.*;
 import static login.LoginSystem.logInMenu;
 
 public class Main {
@@ -10,10 +10,8 @@ public class Main {
             logInMenu();
         }
         catch (Exception e) {
-            System.err.println("Có bug rồi anh zai ơi");
+            e.printStackTrace();
         }
-
     }
-
 
 }

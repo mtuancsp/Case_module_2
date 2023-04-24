@@ -2,7 +2,6 @@ package controller;
 
 import model.Account;
 import model.UserInformation;
-import read_write.ReadWrite;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,10 +14,17 @@ import static get_input.Input.*;
 import static read_write.ReadWrite.write;
 
 public class UserInfoManager {
-    private static List<UserInformation> usersInfo = new ArrayList<>();
+    private static final List<UserInformation> usersInfo = new ArrayList<>();
 
-    private UserInfoManager() throws IOException {
-        write("src/file/usersInfo.txt", usersInfo);
+    private UserInfoManager() {
+    }
+
+    public static void main(String[] args) {
+        try {
+            System.out.println( getUsersInfo());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<UserInformation> getUsersInfo() throws IOException, ClassNotFoundException {
@@ -30,10 +36,6 @@ public class UserInfoManager {
 
     public static void writeUsersInfoToFile() throws IOException {
         write("src/file/usersInfo.txt", usersInfo);
-    }
-
-    public static List<UserInformation> updateUserInfoFromFile() throws IOException, ClassNotFoundException {
-        return usersInfo = ReadWrite.read("src/file/accounts.txt");
     }
 
     public static void changeId(Account acc) throws IOException, ClassNotFoundException {

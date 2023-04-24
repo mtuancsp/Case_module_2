@@ -49,18 +49,24 @@ public class LoginSystem {
     public static void displayLogInMenu() {
         System.out.println("""
                 ───────────────────────────────────────────────────────────────────────────────
-                Chào mừng đến với trang web
+                CHÀO MỪNG CÁC BẠN ĐÃ ĐẾN VỚI BÌNH NGUYÊN VÔ TẬN
                 ───────────────────────────────────────────────────────────────────────────────
                 1. Đăng nhập
                 2. Đăng ký
                 3. Guess
                 4. Cấp lại tài khoản
-                0. Exit""");
+                0. Exit
+                ───────────────────────────────────────────────────────────────────────────────""");
     }
 
     public static void guess() {
         System.out.println("───────────────────────────────────────────────────────────────────────────────");
-        System.out.println("Đang xây dựng...");
+        System.out.println("Đang xây dựng vui lòng quay lại sau ...");
+        System.out.println("   _   ");
+        System.out.println(" ('v')");
+        System.out.println(" /-=-\\");
+        System.out.println("(     )");
+        System.out.println(" ^^ ^^");
         System.out.println("───────────────────────────────────────────────────────────────────────────────");
         returnOrExit();
     }
