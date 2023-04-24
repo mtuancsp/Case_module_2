@@ -8,6 +8,7 @@ public class Main {
         try {
             displayAccountsListByAccessLevel();
             logInMenu();
+
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -209,6 +209,22 @@ public class Input {
         return id;
     }
 
+    //getValidFullName
+    public static String getValidFullName() {
+        Scanner scanner = new Scanner(System.in);
+        String fullName;
+        do {
+            System.out.print("Nhập họ và tên: ");
+            fullName = scanner.nextLine();
+            if (!fullName.matches("^[\\p{L}\\s]+(?:\\s[\\p{L}\\s]+)+$")) {
+                System.err.println("Tên không hợp lệ. Vui lòng nhập lại chính xác.");
+                continue;
+            }
+            return fullName;
+
+        } while (true);
+    }
+
     public static String getValidBirthDate() {
         Scanner scanner = new Scanner(System.in);
         String birthDate;
@@ -216,7 +232,7 @@ public class Input {
             System.out.print("Nhập ngày sinh (dd/MM/yyyy): ");
             birthDate = scanner.nextLine();
             if (!birthDate.matches("^\\d{2}/\\d{2}/\\d{4}$")) {
-                System.out.println("Ngày sinh không đúng định dạng. Vui lòng nhập lại.");
+                System.err.println("Ngày sinh không đúng định dạng. Vui lòng nhập lại.");
             } else {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date dateOfBirth;
@@ -235,7 +251,7 @@ public class Input {
                         return birthDate;
                     }
                 } catch (ParseException e) {
-                    System.out.println("Ngày sinh không hợp lệ. Vui lòng nhập lại.");
+                    System.err.println("Ngày sinh không hợp lệ. Vui lòng nhập lại.");
                 }
             }
         } while (true);

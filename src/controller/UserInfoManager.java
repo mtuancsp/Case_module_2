@@ -53,8 +53,7 @@ public class UserInfoManager {
     public static void changeName(Account acc) throws IOException {
         System.out.println("───────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật họ và tên");
-        Scanner sc = new Scanner(System.in);
-        String newName = sc.nextLine();
+        String newName = getValidFullName();
         acc.getUserInformation().setFullName(newName);
         writeAccountsListToFile();
         System.out.println("Cập nhật họ và tên thành công");
