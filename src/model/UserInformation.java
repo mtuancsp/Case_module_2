@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class UserInformation implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 10002L;
     private String id;
     private String fullName;
     private String birthDate;
@@ -47,7 +50,7 @@ public class UserInformation implements Serializable {
     @Override
     public String toString() {
         return String.format("Họ và tên: %-20s CCCD/CMND: %-15s Ngày sinh: %-15s Mô tả: %s",
-                fullName, id, birthDate, description);
+                getFullName(), id, getBirthDate(), getDescription());
     }
 }
 

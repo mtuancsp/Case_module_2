@@ -30,14 +30,14 @@ public class Input {
             if (account.equals("0")) logInMenu();
 
             if (!account.matches(regex)) {
-                System.out.println("Tên tài khoản không hợp lệ. Vui lòng nhập lại.");
+                System.out.println("Tên tài khoản không hợp lệ. Vui lòng kiểm tra lại.");
                 isValid = false;
                 continue;
             }
 
             if (existingAccounts.contains(account)) {
                 isValid = false;
-                System.out.println("Tài khoản đã tồn tại. Vui lòng nhập lại.");
+                System.out.println("Tài khoản đã tồn tại. Vui lòng kiểm tra lại.");
             } else {
                 isValid = true;
             }
@@ -60,7 +60,7 @@ public class Input {
                 return account;
 
             } else {
-                System.out.println("Tài khoản không tồn tại. Vui lòng nhập lại.");
+                System.out.println("Tài khoản không tồn tại. Vui lòng kiểm tra lại.");
             }
         }
     }
@@ -105,7 +105,7 @@ public class Input {
         return password.matches(regex);
     }
 
-    public static String getValidPhoneNumber() throws IOException, ClassNotFoundException {
+    public static String getValidPhoneNumber() {
         Set<String> existingPhoneNumbers = getPhoneNumberSet();
         String newPhoneNumber;
         Scanner scanner = new Scanner(System.in);
@@ -114,7 +114,7 @@ public class Input {
             newPhoneNumber = scanner.nextLine();
 
             if (!newPhoneNumber.matches("^0[0-9]{9}$")) {
-                System.out.println("Số điện thoại không hợp lệ. Vui lòng nhập lại.");
+                System.out.println("Số điện thoại không hợp lệ. Vui lòng kiểm tra lại.");
                 continue;
             }
             if (existingPhoneNumbers.contains(newPhoneNumber)) {
@@ -127,7 +127,7 @@ public class Input {
         } while (true);
     }
 
-    public static String getValidEmail() throws IOException, ClassNotFoundException {
+    public static String getValidEmail() {
         Set<String> existingEmails = getEmailSet();
         String newEmail;
 
@@ -136,7 +136,7 @@ public class Input {
             newEmail = new Scanner(System.in).nextLine();
 
             if (!newEmail.matches("^[A-Za-z0-9]+[A-Za-z0-9_]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)+$")) {
-                System.out.println("Email không hợp lệ. Vui lòng nhập lại.");
+                System.out.println("Email không hợp lệ. Vui lòng kiểm tra lại.");
                 continue;
             }
             if (existingEmails.contains(newEmail)) {
@@ -149,7 +149,7 @@ public class Input {
         } while (true);
     }
 
-    public static String getExistPhoneNumber() throws IOException, ClassNotFoundException {
+    public static String getExistPhoneNumber() {
         Set<String> existingPhoneNumbers = getPhoneNumberSet();
         String phoneNumber;
         Scanner scanner = new Scanner(System.in);
@@ -162,9 +162,28 @@ public class Input {
                 return phoneNumber;
 
             } else {
-                System.out.println("Số điện thoại không tồn tại trong hệ thống. Vui lòng nhập lại.");
+                System.out.println("Số điện thoại không tồn tại trong hệ thống. Vui lòng kiểm tra lại.");
             }
         }
+    }
+
+    //getExistEmail
+    public static String getExistEmail() {
+        Set<String> existingEmails = getEmailSet();
+        String email;
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("Nhập email: ");
+            email = scanner.nextLine();
+
+            if (existingEmails.contains(email)) {
+                return email;
+
+            } else {
+                System.out.println("Email không tồn tại trong hệ thống. Vui lòng kiểm tra lại.");
+            }
+    }
     }
 
     public static void checkPassword(Account acc) throws IOException, ClassNotFoundException {
@@ -176,7 +195,7 @@ public class Input {
 
         do {
             if (!password.equals(currentPassword)) {
-                System.out.println("Mật khẩu không đúng. Vui lòng nhập lại hoặc nhập 'forgot' nếu đã quên mật khẩu:");
+                System.out.println("Mật khẩu không đúng. Vui lòng nhập lại hoặc nhập 'forgot' nếu đã quên và muốn lấy lại mật khẩu:");
                 password = scanner.nextLine();
             }
         } while (!password.equals(currentPassword) && !password.equals("forgot"));
@@ -205,7 +224,7 @@ public class Input {
                 }
             }
             if (!isValid) {
-                System.out.println("CCCD/CMND không hợp lệ. Vui lòng nhập lại.");
+                System.out.println("CCCD/CMND không hợp lệ. Vui lòng kiểm tra lại.");
             }
         } while (!isValid);
         return id;
@@ -219,7 +238,7 @@ public class Input {
             System.out.print("Nhập họ và tên: ");
             fullName = scanner.nextLine();
             if (!fullName.matches("^[\\p{L}\\s]+(?:\\s[\\p{L}\\s]+)+$")) {
-                System.err.println("Tên không hợp lệ. Vui lòng nhập lại chính xác.");
+                System.err.println("Tên không hợp lệ. Vui lòng kiểm tra lại.");
                 continue;
             }
             return fullName;
@@ -244,7 +263,7 @@ public class Input {
                     dob.setTime(dateOfBirth);
                     Calendar today = Calendar.getInstance();
                     if (dob.after(today)) {
-                        System.err.println("Người đến từ tương lai à ??. Vui lòng nhập lại.");
+                        System.err.println("Người đến từ tương lai à ??. Vui lòng kiểm tra lại.");
                     } else {
                         today.add(Calendar.YEAR, -18);
                         if (dob.after(today)) {
@@ -253,7 +272,7 @@ public class Input {
                         return birthDate;
                     }
                 } catch (ParseException e) {
-                    System.err.println("Ngày sinh không hợp lệ. Vui lòng nhập lại.");
+                    System.err.println("Ngày sinh không hợp lệ. Vui lòng kiểm tra lại.");
                 }
             }
         } while (true);

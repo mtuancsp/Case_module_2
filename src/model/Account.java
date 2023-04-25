@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class Account implements Serializable {
-
-    private String account;
+    @Serial
+    private static final long serialVersionUID = 10001L;
+    private final String account;
     private String username;
     private String password;
     private String phoneNumber;
@@ -13,7 +15,7 @@ public class Account implements Serializable {
     private AccessLevel accessLevel = AccessLevel.USER;
     private LocalDate joinDate;
     private LocalDate banDate;
-    private UserInformation userInformation = new UserInformation();
+    private final UserInformation userInformation = new UserInformation();
 
     public Account(String account, String password, String phoneNumber, String email) {
         this.account = account;
@@ -34,10 +36,6 @@ public class Account implements Serializable {
 
     public String getAccount() {
         return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
     }
 
     public String getUsername() {

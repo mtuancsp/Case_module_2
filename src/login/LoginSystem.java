@@ -4,8 +4,8 @@ import model.Account;
 
 import java.io.IOException;
 
-import static controller.AccountManager.updateListFromFile;
-import static controller.AccountManager.writeAccountsListToFile;
+import static controller.AccountManager.*;
+import static get_input.Input.getExistEmail;
 import static get_input.Input.getExistPhoneNumber;
 import static login.RandomPasswordGenerator.generateRandomPassword;
 import static login.SingIn.signIn;
@@ -18,6 +18,7 @@ public class LoginSystem {
     public static void logInMenu () throws IOException, ClassNotFoundException {
         int choice;
         do {
+            displayAccountsListByAccessLevel();
             displayLogInMenu();
             choice = getValidIntChoice(0 , 4);
 
@@ -32,42 +33,50 @@ public class LoginSystem {
     }
 
     public static void reissueAccount() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
-        System.out.println("Cấp lại tài khoản về số điện thoại");
-        String phoneNumber = getExistPhoneNumber();
-        for (Account account : updateListFromFile()) {
-            if (account.getPhoneNumber().equals(phoneNumber)) {
-                System.out.println("───────────────────────────────────────────────────────────────────────────────");
-                System.out.println("Tài khoản đã được gửi về số điện thoại");
-                System.out.println("Tài khoản: " + account.getAccount());
-                System.out.println("Mật khẩu: " + generateRandomPassword());
-                break;
+        do {
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+            System.out.println("Cấp lại tài khoản");
+            String phoneNumber = getExistPhoneNumber();
+            String email = getExistEmail();
+            for (Account account : updateListFromFile()) {
+                if (account.getPhoneNumber().equals(phoneNumber) && account.getEmail().equals(email)) {
+                    System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+                    System.out.println("Tài khoản đã được gửi về số điện thoại và email");
+                    System.out.println("Tài khoản: " + account.getAccount());
+                    String newPassword = generateRandomPassword();
+                    System.out.println("Mật khẩu: " + newPassword);
+                    account.setPassword(newPassword);
+                    writeAccountsListToFile();
+                    return;
+                }
             }
-        }
+            System.err.println("Số điện thoại và email không khớp, vui lòng kiểm tra lại");
+        } while (true);
+
     }
 
     public static void displayLogInMenu() {
         System.out.println("""
-                ───────────────────────────────────────────────────────────────────────────────
+                ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
                 CHÀO MỪNG CÁC BẠN ĐÃ ĐẾN VỚI BÌNH NGUYÊN VÔ TẬN
-                ───────────────────────────────────────────────────────────────────────────────
+                ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
                 1. Đăng nhập
                 2. Đăng ký
-                3. Guess
+                3. Guest
                 4. Cấp lại tài khoản
                 0. Exit
-                ───────────────────────────────────────────────────────────────────────────────""");
+                ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────""");
     }
 
     public static void guess() {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Đang xây dựng vui lòng quay lại sau ...");
         System.out.println("   _   ");
         System.out.println(" ('v')");
         System.out.println(" /-=-\\");
         System.out.println("(     )");
         System.out.println(" ^^ ^^");
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         returnOrExit();
     }
 

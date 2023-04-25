@@ -24,7 +24,7 @@ public class AccountManager {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Account boss = new Account("boss", "boss", "0987654321", "boss@gmail", AccessLevel.BOSS);
         boss.setJoinDate(LocalDate.parse("2020-01-01"));
-        accountsList.add(boss);
+        updateListFromFile().add(boss);
         writeAccountsListToFile();
         displayAccountsListByAccessLevel();
     }
@@ -118,7 +118,7 @@ public class AccountManager {
         System.out.println("Đã đổi mật khẩu thành công");
     }
 
-    public static void changePhoneNumber(Account acc) throws IOException, ClassNotFoundException {
+    public static void changePhoneNumber(Account acc) throws IOException {
         System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật số điện thoại");
         Scanner scanner = new Scanner(System.in);
@@ -142,7 +142,7 @@ public class AccountManager {
         writeAccountsListToFile();
     }
 
-    public static void changeEmail(Account acc) throws IOException, ClassNotFoundException {
+    public static void changeEmail(Account acc) throws IOException{
         System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật email");
         Scanner scanner = new Scanner(System.in);

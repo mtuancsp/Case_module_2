@@ -52,7 +52,7 @@ public class LoggedMenu {
 
         do {
             System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-            System.out.println("Thông tin tài khoản\n");
+            System.out.println("Thông tin tài khoản");
             System.out.print(Color.YELLOW);
             System.out.printf("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s%n",
                     "ACCOUNT", "USERNAME", "PASSWORD", "ACCESS LEVEL", "PHONE NUMBER", "EMAIL",

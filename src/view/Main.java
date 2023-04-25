@@ -1,6 +1,5 @@
 package view;
 
-import static controller.AccountManager.*;
 import static login.LoginSystem.logInMenu;
 
 public class Main {

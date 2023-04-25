@@ -1,6 +1,7 @@
 package controller;
 
 import model.AccessLevel;
+import model.Color;
 import view.LoggedMenu;
 
 import java.io.IOException;
@@ -17,6 +18,11 @@ public class AccessLevelManager {
         updateListFromFile();
         System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách ADMIN");
+        System.out.print(Color.YELLOW);
+        System.out.printf("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s%n",
+                "ACCOUNT", "USERNAME", "PASSWORD", "ACCESS LEVEL", "PHONE NUMBER", "EMAIL",
+                "Join Date", "Ban Date");
+        System.out.print(Color.RESET_COLOR);
         updateListFromFile().stream().filter(acc -> acc.getAccessLevel() == AccessLevel.ADMIN).forEach(System.out::println);
     }
 
@@ -86,6 +92,11 @@ public class AccessLevelManager {
         updateListFromFile();
         System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách MODERATOR");
+        System.out.print(Color.YELLOW);
+        System.out.printf("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s%n",
+                "ACCOUNT", "USERNAME", "PASSWORD", "ACCESS LEVEL", "PHONE NUMBER", "EMAIL",
+                "Join Date", "Ban Date");
+        System.out.print(Color.RESET_COLOR);
         updateListFromFile().stream().filter(acc -> acc.getAccessLevel() == AccessLevel.MODERATOR).forEach(System.out::println);
     }
 
@@ -130,6 +141,11 @@ public class AccessLevelManager {
         updateListFromFile();
         System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách USER");
+        System.out.print(Color.YELLOW);
+        System.out.printf("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s%n",
+                "ACCOUNT", "USERNAME", "PASSWORD", "ACCESS LEVEL", "PHONE NUMBER", "EMAIL",
+                "Join Date", "Ban Date");
+        System.out.print(Color.RESET_COLOR);
         updateListFromFile().stream().filter(acc -> acc.getAccessLevel() == AccessLevel.USER).forEach(System.out::println);
     }
 
@@ -137,6 +153,11 @@ public class AccessLevelManager {
         updateListFromFile();
         System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách USER đang bị ban");
+        System.out.print(Color.YELLOW);
+        System.out.printf("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s%n",
+                "ACCOUNT", "USERNAME", "PASSWORD", "ACCESS LEVEL", "PHONE NUMBER", "EMAIL",
+                "Join Date", "Ban Date");
+        System.out.print(Color.RESET_COLOR);
         updateListFromFile().stream().filter(acc -> acc.getBanDate() != null).forEach(System.out::println);
     }
 
