@@ -39,7 +39,7 @@ public class UserInfoManager {
     }
 
     public static void changeId(Account acc) throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật CCCD/CMND");
         checkPassword(acc);
         System.out.println("CCCD/CMND: " + acc.getUserInformation().getId());
@@ -51,7 +51,7 @@ public class UserInfoManager {
     }
 
     public static void changeName(Account acc) throws IOException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật họ và tên");
         String newName = getValidFullName();
         acc.getUserInformation().setFullName(newName);
@@ -60,7 +60,7 @@ public class UserInfoManager {
     }
 
     public static void changeBirthDate(Account acc) throws IOException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật ngày sinh");
         String newBirthDate = getValidBirthDate();
         acc.getUserInformation().setBirthDate(newBirthDate);
@@ -69,7 +69,7 @@ public class UserInfoManager {
     }
 
     public static void changeDescription(Account acc) throws IOException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật mô tả");
         Scanner sc = new Scanner(System.in);
         String newDescription = sc.nextLine();

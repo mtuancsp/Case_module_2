@@ -2,6 +2,7 @@ package controller;
 
 import model.AccessLevel;
 import model.Account;
+import model.Color;
 import read_write.ReadWrite;
 import view.LoggedMenu;
 
@@ -21,8 +22,9 @@ public class AccountManager {
         write("src/file/accounts.txt", accountsList);
     }
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-//        accountsList.add(new Account("boss", "boss", "113", "boss", AccessLevel.BOSS));
-        findAccount("boss").setJoinDate(LocalDate.parse("2022-01-01"));
+        Account boss = new Account("boss", "boss", "0987654321", "boss@gmail", AccessLevel.BOSS);
+        boss.setJoinDate(LocalDate.parse("2020-01-01"));
+        accountsList.add(boss);
         writeAccountsListToFile();
         displayAccountsListByAccessLevel();
     }
@@ -39,12 +41,12 @@ public class AccountManager {
         return updateListFromFile().stream().map(Account::getAccount).collect(Collectors.toSet());
     }
 
-    public static Set<String> getPhoneNumberSet() throws IOException, ClassNotFoundException {
-        return updateListFromFile().stream().map(Account::getPhoneNumber).collect(Collectors.toSet());
+    public static Set<String> getPhoneNumberSet() {
+        return accountsList.stream().map(Account::getPhoneNumber).collect(Collectors.toSet());
     }
 
-    public static Set<String> getEmailSet() throws IOException, ClassNotFoundException {
-        return updateListFromFile().stream().map(Account::getEmail).collect(Collectors.toSet());
+    public static Set<String> getEmailSet() {
+        return accountsList.stream().map(Account::getEmail).collect(Collectors.toSet());
     }
 
 
@@ -55,19 +57,21 @@ public class AccountManager {
 
     public static void displayAccountsListByAccessLevel() throws IOException, ClassNotFoundException {
         updateListFromFile().sort(Comparator.comparing(Account::getAccessLevel));
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách tài khoản");
+        System.out.print(Color.YELLOW);
         System.out.printf("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s%n",
                 "ACCOUNT", "USERNAME", "PASSWORD", "ACCESS LEVEL", "PHONE NUMBER", "EMAIL",
                 "Join Date", "Ban Date");
+        System.out.print(Color.RESET_COLOR);
         for (Account account : accountsList) {
             System.out.println(account);
         }
     }
 
     public static void deleteAccount() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
-        System.out.println("Xóa tài khoản !!!");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+        System.err.println("Xóa tài khoản !!!");
         String account = getExistAccount();
         Account acc = findAccount(account);
         if (acc.getAccessLevel() == AccessLevel.USER) {
@@ -84,7 +88,7 @@ public class AccountManager {
     //change username
     public static void changeUsername(Account acc) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Username hiện tại: " + acc.getUsername());
         System.out.println("Nhập username mới: ");
         String newUsername = scanner.nextLine();
@@ -95,14 +99,14 @@ public class AccountManager {
 
     //change password
     public static void changePassword(Account acc) throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Đổi mật khẩu");
         checkPassword(acc);
         setNewPassword(acc);
     }
 
     public static void setNewPassword(Account acc) throws IOException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Thiết lập mật khẩu mới");
         String newPassword = getValidPassword();
         while (newPassword.equals(acc.getPassword())) {
@@ -115,7 +119,7 @@ public class AccountManager {
     }
 
     public static void changePhoneNumber(Account acc) throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật số điện thoại");
         Scanner scanner = new Scanner(System.in);
         String currentPhoneNumber = acc.getPhoneNumber();
@@ -129,10 +133,9 @@ public class AccountManager {
             }
         } while (!phone.equals(currentPhoneNumber));
 
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Xác thực số điện thoại thành công");
         System.out.println("Thiết lập số điện thoại mới");
-//        String newPhoneNumber = scanner.nextLine();
         String newPhoneNumber = getValidPhoneNumber();
         acc.setPhoneNumber(newPhoneNumber);
         System.out.println("Đã thay đổi số điện thoại thành công.");
@@ -140,7 +143,7 @@ public class AccountManager {
     }
 
     public static void changeEmail(Account acc) throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Cập nhật email");
         Scanner scanner = new Scanner(System.in);
         String currentEmail = acc.getEmail();
@@ -153,7 +156,7 @@ public class AccountManager {
             }
         } while (!email.equals(currentEmail));
 
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Xác thực email thành công");
         System.out.println("Thiết lập email mới");
         String newEmail = getValidEmail();

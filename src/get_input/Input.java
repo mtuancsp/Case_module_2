@@ -24,8 +24,10 @@ public class Input {
         Scanner scanner = new Scanner(System.in);
 
         do {
+
             System.out.print("Nhập tên tài khoản: ");
             account = scanner.nextLine();
+            if (account.equals("0")) logInMenu();
 
             if (!account.matches(regex)) {
                 System.out.println("Tên tài khoản không hợp lệ. Vui lòng nhập lại.");
@@ -68,7 +70,7 @@ public class Input {
         boolean isValid = false;
         Scanner scanner = new Scanner(System.in);
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("Mật khẩu phải có 8 ký tự trở lên, không bao gồm khoảng trắng, và trong đó có ít nhất 1 chữ thường, 1 chữ hoa, 1 số, 1 kí tự đặc biệt.");
             System.out.print("Nhập mật khẩu: ");
             password = scanner.nextLine();

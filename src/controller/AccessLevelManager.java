@@ -15,14 +15,14 @@ public class AccessLevelManager {
 
     public static void listADMIN() throws IOException, ClassNotFoundException {
         updateListFromFile();
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách ADMIN");
         updateListFromFile().stream().filter(acc -> acc.getAccessLevel() == AccessLevel.ADMIN).forEach(System.out::println);
     }
 
     //add admin
     public static void addADMIN() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Thêm ADMIN");
         do {
             String account = getExistAccount();
@@ -40,7 +40,7 @@ public class AccessLevelManager {
     }
 
     public static void removeADMIN() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Tước quyền ADMIN");
         do {
             String account = getExistAccount();
@@ -52,7 +52,7 @@ public class AccessLevelManager {
                 System.out.println("Tài khoản không phải quyền ADMIN, vui lòng kiểm tra lại");
             } else {
                 do {
-                    System.out.println("───────────────────────────────────────────────────────────────────────────────");
+                    System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
                     System.out.println("Bạn muốn hạ tài khoản '" + account + "' xuống cấp độ nào?");
                     System.out.println("1. MODERATOR");
                     System.out.println("2. USER");
@@ -84,13 +84,13 @@ public class AccessLevelManager {
 
     public static void listMODERATOR() throws IOException, ClassNotFoundException {
         updateListFromFile();
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách MODERATOR");
         updateListFromFile().stream().filter(acc -> acc.getAccessLevel() == AccessLevel.MODERATOR).forEach(System.out::println);
     }
 
     public static void addMODERATOR() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Thêm MODERATOR");
         do {
             String account = getExistAccount();
@@ -107,7 +107,7 @@ public class AccessLevelManager {
     }
 
     public static void removeMODERATOR() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Tước quyền MODERATOR");
         do {
             String account = getExistAccount();
@@ -128,20 +128,20 @@ public class AccessLevelManager {
 
     public static void listUSER() throws IOException, ClassNotFoundException {
         updateListFromFile();
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách USER");
         updateListFromFile().stream().filter(acc -> acc.getAccessLevel() == AccessLevel.USER).forEach(System.out::println);
     }
 
     public static void listBannedUser() throws IOException, ClassNotFoundException {
         updateListFromFile();
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Danh sách USER đang bị ban");
         updateListFromFile().stream().filter(acc -> acc.getBanDate() != null).forEach(System.out::println);
     }
 
     public static void unbanUSER() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Mở khóa tài khoản");
         String account;
         do{
@@ -160,7 +160,7 @@ public class AccessLevelManager {
     }
 
     public static void banUSER() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("BAN USER");
         String account = getExistAccount();
         var acc = findAccount(account);

@@ -16,10 +16,11 @@ public class SingIn {
         Scanner scanner = new Scanner(System.in);
 
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("Đăng nhập");
             System.out.print("Tài khoản: ");
             String account = scanner.nextLine();
+            if (account.equals("0")) break;
             System.out.print("Mật khẩu: ");
             String password = scanner.nextLine();
 

@@ -13,7 +13,7 @@ public class ForgotPassword {
     public static void forgotPassword() throws IOException, ClassNotFoundException {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Lấy lại mật khẩu");
         System.out.println("Nhập tên đăng nhập muốn lấy lại mật khẩu");
         String account = getExistAccount();

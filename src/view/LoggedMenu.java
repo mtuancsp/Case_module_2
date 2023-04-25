@@ -1,6 +1,7 @@
 package view;
 
 import model.Account;
+import model.Color;
 
 import java.io.IOException;
 
@@ -22,12 +23,12 @@ public class LoggedMenu {
 
     public static void loggedMenu(Account acc) throws IOException, ClassNotFoundException {
         account = acc;
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Chào mừng '" + account.getUsername() + "' đã quay trở lại");
         int choice;
 
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("""
                     1. Thông tin tài khoản
                     2. Thông tin cá nhân
@@ -50,14 +51,16 @@ public class LoggedMenu {
     public static void infoAccount() throws IOException, ClassNotFoundException {
 
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
-            System.out.println("Thông tin tài khoản");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+            System.out.println("Thông tin tài khoản\n");
+            System.out.print(Color.YELLOW);
             System.out.printf("%-15s %-15s %-15s %-15s %-15s %-30s %-15s %-15s%n",
                     "ACCOUNT", "USERNAME", "PASSWORD", "ACCESS LEVEL", "PHONE NUMBER", "EMAIL",
                     "Join Date", "Ban Date");
+            System.out.print(Color.RESET_COLOR);
             System.out.println(account);
-            System.out.println("Thâm niên trong ngành: " + getJoinDuration(account));
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println(Color.BOLD + "\nThâm niên trong ngành: " + getJoinDuration(account) + Color.RESET_COLOR);
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             int choice;
             System.out.println("""
                     1. Đổi username
@@ -91,7 +94,7 @@ public class LoggedMenu {
 
     public static void bossMenu() throws IOException, ClassNotFoundException {
         do{
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("1. Quản lý ADMIN");
             System.out.println("2. Quản lý MODERATOR");
             System.out.println("3. Quản lý USER");
@@ -115,17 +118,17 @@ public class LoggedMenu {
     }
 
     private static void usersInfo() throws IOException, ClassNotFoundException {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.out.println("Thông tin người dùng trong hệ thống");
         getUsersInfo().forEach(System.out::println);
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         returnOrExit();
     }
 
 
     private static void manageADMIN() throws IOException, ClassNotFoundException {
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("1. Danh sách ADMIN");
             System.out.println("2. Thêm ADMIN");
             System.out.println("3. Tước quyền ADMIN");
@@ -144,7 +147,7 @@ public class LoggedMenu {
 
     public static void adminMenu() throws IOException, ClassNotFoundException {
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("1. Quản lý MODERATOR");
             System.out.println("2. Quản lý USER");
             System.out.println("3. Xoá tài khoản user");
@@ -165,7 +168,7 @@ public class LoggedMenu {
 
     public static void moderatorMenu() throws IOException, ClassNotFoundException {
         do{
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("1. Quản lý USER");
             System.out.println("2. Quản lý forum");
             System.out.println("0. Quay lại");
@@ -185,10 +188,10 @@ public class LoggedMenu {
 
     private static void userInfo() throws IOException, ClassNotFoundException {
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("Thông tin cá nhân\n" + account.getUserInformation());
             int choice;
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("""
                     1. Cập nhật CCCD/CMND
                     2. Cập nhật họ và tên
@@ -208,8 +211,6 @@ public class LoggedMenu {
         } while (true);
     }
 
-
-
     public static void logout() throws IOException, ClassNotFoundException {
         writeAccountsListToFile();
         logInMenu();
@@ -218,7 +219,7 @@ public class LoggedMenu {
 
     private static void manageUSER() throws IOException, ClassNotFoundException {
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("1. Danh sách USER");
             System.out.println("2. Danh sách USER bị BAN");
             System.out.println("3. Khóa USER");
@@ -239,7 +240,7 @@ public class LoggedMenu {
 
     private static void manageMODERATOR() throws IOException, ClassNotFoundException {
         do {
-            System.out.println("───────────────────────────────────────────────────────────────────────────────");
+            System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             System.out.println("1. Danh sách MOD");
             System.out.println("2. Thêm MOD");
             System.out.println("3. Tước quyền MOD");
@@ -257,15 +258,15 @@ public class LoggedMenu {
     }
 
     public static void userMenu() {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.err.println("Công trường đang thi công mời ra ngoài...");
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
     }
 
     private static void manageForum() {
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
         System.err.println("Công trường đang thi công mời ra ngoài...");
-        System.out.println("───────────────────────────────────────────────────────────────────────────────");
+        System.out.println("──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
     }
 
 
